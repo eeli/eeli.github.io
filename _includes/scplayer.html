@@ -1,0 +1,65 @@
+<div id="scplayer">
+
+<button href="#" id="play" class="player" 
+	value="Play">Play</button>
+<button href="#" id="previous" class="player" 
+	value="Previous">Previous</button>
+<button href="#" id="next" class="player" 
+	value="Next">Next</button>
+
+<p id="tune" class="player"></p>
+
+<a class="player" 
+href="https://soundcloud.com/eero-lihavainen"><img src= "assets/soundcloud_logo.png"/></a>
+
+<iframe id="soundcloud_widget"
+      src="http://w.soundcloud.com/player/?url=https://api.soundcloud.com/users/11437854&show_artwork=false&liking=false&sharing=false&auto_play=false"
+      width="0"
+      height="0"
+      frameborder="no"></iframe>
+</div>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script src="http://w.soundcloud.com/player/api.js"></script>
+<script>
+
+function updatePlayer(widget) {
+		widget.getCurrentSound(function(snd) {
+			$('#tune').html(snd.title);
+		});
+	}
+
+ $(document).ready(function() {
+     widget = SC.Widget(document.getElementById('soundcloud_widget'));
+     widget.bind(SC.Widget.Events.READY, function() {
+	   updatePlayer(widget);
+       console.log('Ready...');
+     });
+
+     $('#play').click(function() {
+       widget.toggle();
+	   updatePlayer(widget);
+     });
+
+	$('#next').click(function() {
+       widget.next();
+       widget.pause();
+	   updatePlayer(widget);
+     });
+
+	$('#previous').click(function() {
+       widget.prev();
+       widget.pause();
+	   updatePlayer(widget);
+     });
+
+   });
+
+
+//SC.initialize({
+ // client_id: '5ada6abddd580d30bd3b43131140b9c2'
+//});
+
+</script>
+
+
